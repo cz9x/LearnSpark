@@ -10,17 +10,14 @@ object QueryIP {
   def main(args: Array[String]): Unit = {
 
     val eIP = ExtractIp.extractIp(file)
-
+    //遍历set集合，获取API返回的json并写入redis
     eIP.foreach(x =>{
-      if (OperationRedis.keyExists(x)){
-
-      } else{
-        val value = GetAddrByIP.getAddr(x)
-        println(x, value)
-//        OperationRedis.write(x, value)
+      //判断redis中是否存在这个key
+      if (!OperationRedis.keyExists(x)){
+          println(x, GetAddrByIP.getAddrByBaidu(x))
+          OperationRedis.write(x, GetAddrByIP.getAddrByBaidu(x))
       }
     })
 
   }
-
 }

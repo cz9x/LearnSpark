@@ -13,7 +13,6 @@ import scala.util.matching.Regex
 object ExtractIp {
   /**
     * 通过NIO读取文件，将文件按行分割，用正则表达式匹配获取IP
-    *
     * @param file 文本文件地址
     * @return 存放IP的Set集合
     */
@@ -29,7 +28,7 @@ object ExtractIp {
     val set = Set[String]()
 
     //通过NIO读取文本文件并按行分割
-    val content = new String(Files.readAllBytes(Paths.get(file))).split("\n")
+    val content = new String(Files.readAllBytes(Paths.get(file))).split(" ")
 
     //按行通过正则表达式抽取IP放入set集合
     for (i <- 0 until content.length){

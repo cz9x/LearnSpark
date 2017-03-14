@@ -1,6 +1,7 @@
 package ip.matching
 
 import redis.clients.jedis.Jedis
+import redis.clients.jedis.exceptions.JedisDataException
 
 /**
   * Created by tony on 2017/3/10.
@@ -32,7 +33,13 @@ object OperationRedis {
 
   def write(key: String, value: String)={
 
-    jedis.set(key, value)
+    try {
+      jedis.set(key, value)
+    } catch {
+      case ex: JedisDataException => {
+        println("redis插入的value不能为null")
+      }
+    }
   }
 
 }
