@@ -11,6 +11,7 @@ object QueryIP {
 
     val eIP = ExtractIp.extractIp(file)
     //遍历set集合，获取API返回的json并写入redis
+    println("遍历set集合调用API获取IP数据信息")
     eIP.foreach(x =>{
       //判断redis中是否存在这个key
       if (!OperationRedis.keyExists(x)){
@@ -18,6 +19,7 @@ object QueryIP {
           OperationRedis.write(x, GetAddrByIP.getAddrByBaidu(x))
       }
     })
+    println("查询完毕")
 
   }
 }
