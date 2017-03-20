@@ -34,8 +34,8 @@ try:
 
         # print avg_home_upoint, avg_guest_upoint, given_point, bs_point, lpoint
 
-        sql = "SET SESSION sql_mode = '';"\
-              "insert into game_detail(home_team,guest_team,game_time,avg_home_upoint,avg_guest_upoint," \
+        # "SET SESSION sql_mode = '';"\
+        sql = "insert into game_detail(home_team,guest_team,game_time,avg_home_upoint,avg_guest_upoint," \
               "given_point,bs_point,home_lose,home_wine,given_point_home_lose,given_point_home_wine," \
               "big_point,small_point,point_diff_1_5_home_lose,point_diff_6_10_home_lose,point_diff_11_15_home_lose," \
               "point_diff_16_20_home_lose,point_diff_21_25_home_lose,point_diff_26_home_lose," \

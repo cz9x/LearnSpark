@@ -5,7 +5,7 @@ package ip.matching
   */
 object QueryIP {
 
-  val file = "/Users/tony/Downloads/nirvana-analyse-topology-159-1489043215%2F6708%2Fworker.log"
+  val file = "/Users/tony/Downloads/nirvana.log"
 
   def main(args: Array[String]): Unit = {
 

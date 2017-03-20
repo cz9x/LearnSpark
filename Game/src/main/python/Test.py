@@ -1,52 +1,36 @@
-#!/public/spark-0.9.1/bin/pyspark
+# -*- coding: utf-8 -*-
 
-import os
+import requests
+from bs4 import BeautifulSoup
+from spider import ConnMysql
+
 import sys
 
-# Set the path for spark installation
-# this is the path where you have built spark using sbt/sbt assembly
-os.environ['SPARK_HOME'] = "/public/spark-0.9.1"
-# os.environ['SPARK_HOME'] = "/home/jie/d2/spark-0.9.1"
-# Append to PYTHONPATH so that pyspark could be found
-sys.path.append("/public/spark-0.9.1/python")
-# sys.path.append("/home/jie/d2/spark-0.9.1/python")
+reload(sys)
+sys.setdefaultencoding('utf8')
 
-# Now we are ready to import Spark Modules
-try:
-    from pyspark import SparkContext
-    from pyspark import SparkConf
+url = 'http://www.9188.com/jclq/kaijiang/?expect=170315'
 
-except ImportError as e:
-    print ("Error importing Spark Modules", e)
-    sys.exit(1)
+html = requests.get(url)
+print html.text
 
-import numpy as np
-
-from sklearn.cross_validation import train_test_split, Bootstrap
-from sklearn.datasets import make_classification
-from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier
-from sklearn import datasets, svm, pipeline
-from sklearn.kernel_approximation import RBFSampler
-from sklearn.linear_model import SGDClassifier
-
-if __name__ =='__main__':
-    conf=SparkConf()
-    conf.setMaster("spark://172.18.109.87:7077")
-    # conf.setMaster("local")
-    conf.setAppName("spark_svm")
-    conf.set("spark.executor.memory", "12g")
-    sc = SparkContext(conf=conf)
-    X, y = make_classification(n_samples=10000, n_features=30, n_classes=2)
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
-
-    samples = sc.parallelize(Bootstrap(y.size))
-    feature_map_fourier = RBFSampler(gamma=.2, random_state=1)
-    fourier_approx_svm = pipeline.Pipeline([("feature_map", feature_map_fourier),
-                                            ("svm", SGDClassifier())])
-    fourier_approx_svm.set_params(feature_map__n_components=700)
-    results = samples.map(lambda (index, _):
-                          fourier_approx_svm.fit(X[index], y[index]).score(X_test, y_test)) \
-                          .reduce(lambda x,y: x+y)
-    final_results = results/ len(Bootstrap(y.size))
-    print(final_results)
+# user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) " \
+#              "Chrome/56.0.2924.87 Safari/537.36 "
+#
+# headers = {
+#     "User-Agent": user_agent,
+#     "Referer": "http://www.9188.com/jclq/kaijiang/",
+#     "Host": "www.9188.com",
+#     "Cookie": "buymode=48; buymode=48; JSESSIONID-CLUSTER-RBC=954EFC5DCD9C42E483CCA368353CE8DB; JSESSIONID=17CA84E8439E20BBFE27527944BD1FDF",
+#     "Connection": "keep-alive",
+#     "Accept-Language": "zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4",
+#     "Accept-Encoding": "gzip, deflate, sdch",
+#     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+# }
+# data = {
+#     "expect": "170315"
+# }
+# s = requests.session()
+# # r = s.post(url, headers=headers)
+# r = s.post(url, data=data, headers=headers)
+# print r.content
