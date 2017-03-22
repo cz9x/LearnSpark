@@ -8,7 +8,7 @@ def conn_mysql(sql):
               'user': 'root',
               'password': '123456',
               'port': 3306,
-              'database': 'test',
+              'database': 'nba',  # 'test'
               'charset': 'utf8'
               }
 

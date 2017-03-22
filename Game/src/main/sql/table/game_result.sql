@@ -1,0 +1,21 @@
+CREATE TABLE `game_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `game_id` int(11) DEFAULT NULL,
+  `home_team` varchar(50) DEFAULT NULL,
+  `guest_team` varchar(50) DEFAULT NULL,
+  `game_time` datetime DEFAULT NULL,
+  `home_point` int(11) DEFAULT NULL,
+  `guest_point` int(11) DEFAULT NULL,
+  `home_win` tinyint(4) DEFAULT NULL,
+  `home_lose` tinyint(4) DEFAULT NULL,
+  `given_point` decimal(5,2) DEFAULT NULL,
+  `given_point_home_win` tinyint(4) DEFAULT NULL,
+  `given_point_home_lose` tinyint(4) DEFAULT NULL,
+  `bs_point` decimal(5,2) DEFAULT NULL,
+  `big_point` tinyint(4) DEFAULT NULL,
+  `small_point` tinyint(4) DEFAULT NULL,
+  `point_diff` decimal(5,2) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `update_ind` (`home_team`,`guest_team`,`game_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
